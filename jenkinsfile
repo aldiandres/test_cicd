@@ -10,22 +10,22 @@ pipeline {
         PATH = "${JAVA_HOME}\\bin;${env.PATH}"
     }
 
+    
+
     stages {
 
-        stage('Check Java') {
+         stage('Check Java') {
             steps {
                 bat 'java -version'
             }
         }
-    }
-
-    stages {
 
         stage('Build + Test') {
             steps {
                 bat 'mvn clean package'
             }
         }
+        
 
         stage('Docker Build') {
             steps {
