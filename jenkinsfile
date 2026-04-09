@@ -1,9 +1,23 @@
 pipeline {
     agent any
 
-    tools {
+        tools {
         jdk 'JDK17'
+        maven 'Maven'
     }
+
+    environment {
+        JAVA_HOME = tool 'JDK17'
+        PATH = "${JAVA_HOME}\\bin;${env.PATH}"
+    }
+
+    stages {
+
+        stage('Check Java') {
+            steps {
+                bat 'java -version'
+            }
+        }
 
     stages {
 
