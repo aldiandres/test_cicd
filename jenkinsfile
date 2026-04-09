@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven'
+    }
+
+    stages {
+
+        stage('Build + Test') {
+            steps {
+                bat 'mvn clean package'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker build -t cicd-app .'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                bat 'docker stop cicd-container || exit 0'
+                bat 'docker rm cicd-container || exit 0'
+                bat 'docker run -d -p 8080:8080 --name cicd-container cicd-app'
+            }
+        }
+    }
+}
